@@ -1,5 +1,0 @@
-"""
-App package initializer.
-"""
-
-
