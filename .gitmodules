@@ -1,0 +1,9 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/capslol/ParaPara-frontend.git
+[submodule "backend"]
+	path = backend
+	url = https://github.com/capslol/ParaPara-backend.git
+[submodule "telegram-bot"]
+	path = telegram-bot
+	url = https://github.com/capslol/ParaPara-telegram-bot.git

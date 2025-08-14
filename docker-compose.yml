@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: parapara-backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "3001:3000"
+    environment: []
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.local
+    container_name: parapara-frontend
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "5173:5173"
+    environment: []
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  telegram-bot:
+    build: ./telegram-bot
+    container_name: parapara-telegram-bot
+    env_file:
+      - ./telegram-bot/.env
+    depends_on:
+      - backend
+      - ngrok
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: parapara-ngrok
+    command: http --log=stdout backend:3000
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    ports:
+      - "4040:4040"
+    depends_on:
+      - backend
+
+networks:
+  default:
+    name: parapara
+
+
